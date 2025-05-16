@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Eventos Chingon</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main class="container">
+        <h1 class="title">Registro para Eventos Chingon 😎 </h1>
+        <form id="registroEvento" class="event-form">
+            
+            <fieldset class="form-section">
+                <legend class="section-title">Información Personal</legend>
+                
+                <div class="form-group">
+                    <label for="nombre" class="required">Nombre completo:</label>
+                    <input type="text" id="nombre" name="nombre" 
+                           placeholder="Ej: Alvaro Calleros" 
+                           class="form-input">
+                    <div class="error-message" id="nombreError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="correo" class="required">Correo electrónico:</label>
+                    <input type="email" id="correo" name="correo" 
+                           placeholder="ejemplo@empresa.com" 
+                           class="form-input">
+                    <div class="error-message" id="correoError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="telefono" class="required">Teléfono:</label>
+                    <input type="tel" id="telefono" name="telefono" 
+                           placeholder="10 dígitos sin espacios" 
+                           pattern="[0-9]{10}"
+                           class="form-input">
+                    <div class="error-message" id="telefonoError"></div>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-section">
+                <legend class="section-title">Preferencias del Evento</legend>
+                
+                <div class="form-group">
+                    <p class="required">Intereses principales:</p>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="intereses" value="tecnología">
+                            Tecnología e Innovación Digital
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="intereses" value="negocios">
+                            Desarrollo de Negocios
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="intereses" value="liderazgo">
+                            Arte
+                        </label>
+                    </div>
+                    <div class="error-message" id="interesesError"></div>
+                </div>
+
+                <div class="form-group">
+                    <p class="required">Horario preferido:</p>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="horario" value="mañana">
+                            9:00 AM - 12:00 PM
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="horario" value="tarde">
+                            1:00 PM - 4:00 PM
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="horario" value="noche">
+                            5:00 PM - 8:00 PM
+                        </label>
+                    </div>
+                    <div class="error-message" id="horarioError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="fecha" class="required">Fecha del evento:</label>
+                    <input type="date" id="fecha" name="fecha" 
+                           class="form-input">
+                    <div class="error-message" id="fechaError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="hora" class="required">Hora exacta de registro:</label>
+                    <input type="time" id="hora" name="hora" 
+                           class="form-input"
+                           min="09:00" max="20:00">
+                    <div class="error-message" id="horaError"></div>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-section">
+                <legend class="section-title">Documentación Adjunta</legend>
+                
+                <div class="form-group">
+                    <label for="archivo">Identificación oficial (opcional):</label>
+                    <input type="file" id="archivo" name="archivo"
+                           accept=".pdf,.jpg,.png"
+                           class="form-input">
+                    <small>Formatos aceptados: PDF, JPG, PNG (Máx. 5MB)</small>
+                </div>
+            </fieldset>
+
+            <div class="form-actions">
+                <button type="submit" class="submit-btn">Confirmar Registro</button>
+            </div>
+        </form>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
