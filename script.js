@@ -1,6 +1,16 @@
-
 document.addEventListener('DOMContentLoaded', () => {
+  const z = window.Zod; 
   const form = document.getElementById('registroEvento');
+
+  const schema = z.object({
+    nombre: z.string().min(3, "El nombre debe tener al menos 3 caracteres"),
+    correo: z.string().email("Correo inválido"),
+    telefono: z.string().regex(/^\d{10}$/, "El teléfono debe tener 10 dígitos"),
+    intereses: z.array(z.string()).min(1, "Selecciona al menos un interés"),
+    horario: z.string().nonempty("Selecciona un horario"),
+    fecha: z.string().nonempty("Selecciona una fecha"),
+    hora: z.string().nonempty("Selecciona una hora"),
+  });
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -9,28 +19,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const correo = form.correo.value.trim();
     const telefono = form.telefono.value.trim();
     const intereses = Array.from(form.querySelectorAll('input[name="intereses"]:checked')).map(i => i.value);
-    const horario = form.querySelector('input[name="horario"]:checked');
+    const horario = form.querySelector('input[name="horario"]:checked')?.value || "";
     const fecha = form.fecha.value;
     const hora = form.hora.value;
-    const archivo = form.archivo.files[0];
 
-    if (!nombre || !correo || !telefono || intereses.length === 0 || !horario || !fecha || !hora) {
-      alert('Por favor, completa todos los campos obligatorios.');
+    const data = { nombre, correo, telefono, intereses, horario, fecha, hora };
+    const result = schema.safeParse(data);
+
+    document.querySelectorAll('.error-message').forEach(div => div.textContent = '');
+
+    if (!result.success) {
+      result.error.errors.forEach(err => {
+        const field = err.path[0];
+        const errorDiv = document.getElementById(`${field}Error`);
+        if (errorDiv) errorDiv.textContent = err.message;
+      });
       return;
     }
 
-    const formData = new FormData();
-    formData.append('nombre', nombre);
-    formData.append('correo', correo);
-    formData.append('telefono', telefono);
-    intereses.forEach(i => formData.append('intereses[]', i));
-    formData.append('horario', horario.value);
-    formData.append('fecha', fecha);
-    formData.append('hora', hora);
-    if (archivo) formData.append('archivo', archivo);
-
-    try { // Esta URL es un ejemplo, para conectar con el backend se ocupa la URL del servidor, esto (backend) apenas lo ando aprendiendo jeje
-      const response = await fetch('https://jsonplaceholder.typicode.com/posts', { 
+    const formData = new FormData(form);
+    try {
+      const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
         method: 'POST',
         body: formData
       });
